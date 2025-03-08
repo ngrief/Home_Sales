@@ -1,52 +1,45 @@
-# Home_Sales
+# Home Sales Analysis with PySpark
 
-# 🏡 Home Sales Analysis (PySpark)
+This project analyzes home sales data using PySpark to gain insights into pricing trends and other factors affecting the real estate market.
 
-This project analyzes home sales data using Apache Spark (PySpark) in Google Colab. The dataset is processed using Spark SQL to perform various queries on home prices.
+## Project Overview
 
-## 📌 Project Overview
-- Load home sales data from an AWS S3 bucket into a PySpark DataFrame.
-- Create a temporary SQL table for querying.
-- Analyze home prices based on different criteria.
-- Optimize performance using caching and partitioning.
-- Compare execution runtimes between cached, uncached, and partitioned datasets.
-- Save and read Parquet formatted data for efficient storage.
+The project performs the following tasks:
 
-## 🔧 Setup Instructions
+1. **Data Loading:** Loads home sales data from an AWS S3 bucket into a PySpark DataFrame.
+2. **Data Exploration:** Creates a temporary view of the DataFrame to perform SQL queries.
+3. **Querying:** Executes various SQL queries to answer specific questions about the data, including:
+    - Average price of four-bedroom houses sold per year.
+    - Average price of homes based on year built, bedrooms, bathrooms, floors, and square footage.
+    - Average price of homes based on view rating.
+4. **Performance Optimization:**
+    - Caches the temporary table to improve query performance.
+    - Compares the runtime of queries with and without caching.
+5. **Data Partitioning:**
+    - Partitions the data by `date_built` to improve query efficiency.
+    - Saves the partitioned data as Parquet files.
+    - Reads the Parquet data and creates a temporary table.
+    - Compares the runtime of queries using partitioned data.
+6. **Cleanup:** Uncaches the temporary table to free up resources.
 
-### Install Dependencies
-!apt-get update !apt-get install openjdk-11-jdk-headless -qq > /dev/null !wget -q http://www.apache.org/dist/spark/spark-3.5.3/spark-3.5.3-bin-hadoop3.tgz !tar xf spark-3.5.3-bin-hadoop3.tgz !pip install -q findspark
+## Requirements
 
-shell
-Copy
-Edit
+- Google Colab or a similar environment with PySpark installed.
+- Access to the home sales data in the specified AWS S3 bucket.
 
-### Start PySpark
-from pyspark.sql import SparkSession import findspark
+## Usage
 
-findspark.init() spark = SparkSession.builder.appName("HomeSalesAnalysis").getOrCreate()
+1. Open the notebook in Google Colab.
+2. Run the cells in order to execute the code and perform the analysis.
+3. Review the output and interpretations provided in the notebook.
 
-markdown
-Copy
-Edit
+## Results
 
-## 🚀 Performance Optimization
-- **Cached `home_sales` table**
-df_cached = spark.table("home_sales") df_cached.cache() df_cached.count()
+The project provides insights into various aspects of the home sales data, such as:
+- Pricing trends based on different factors.
+- Performance benefits of caching and partitioning.
+- Impact of view rating on home prices.
 
-csharp
-Copy
-Edit
-- **Partitioned by `date_built`**
-df.write.partitionBy("date_built").parquet("/mnt/data/home_sales_partitioned")
+## Conclusion
 
-graphql
-Copy
-Edit
-
-## 📈 Results Summary
-| Query Type       | Runtime  |
-|------------------|---------|
-| Uncached Query  | ~0.88s  |
-| Cached Query    | ~0.0176s |
-| Partitioned Query | ~0.0184s |
+PySpark is a powerful tool for analyzing large datasets like home sales data. By leveraging its capabilities, this project provides valuable insights into the real estate market.
